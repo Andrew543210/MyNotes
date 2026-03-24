@@ -31,7 +31,7 @@ public class NotesController : ControllerBase
     public async Task<IActionResult> Get([FromQuery]GetNotesRequest request, CancellationToken ct)
     {
         var notesQuery =  _dbContext.Notes
-            .Where(n => !string.IsNullOrWhiteSpace(request.Search) &&
+            .Where(n => string.IsNullOrWhiteSpace(request.Search) ||
                         n.Title.ToLower().Contains(request.Search.ToLower()));
 
         Expression<Func<Note, object>> selectorKey = request.SortItem?.ToLower() switch
